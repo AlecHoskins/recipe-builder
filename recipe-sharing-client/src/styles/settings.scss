@@ -1,0 +1,89 @@
+/**
+ * src/styles/settings.scss
+ *
+ * Configures SASS variables and Vuetify overwrites
+ */
+
+// https://vuetifyjs.com/features/sass-variables/`
+// @use 'vuetify/settings' with (
+//   $color-pack: false
+// );
+
+//#region Variables
+// $app-bg-color: rgb(87, 78, 140);
+$app-bg-color: #84b393;
+
+// $side-menu-bg-color: rgb(27, 34, 48);
+$side-menu-bg-color:  #4c857c;
+$icon-color: rgb(255, 255, 255);
+
+$top-menu-card-bg-color: rgba(255, 255, 255, 0);
+$top-menu-card-color: rgb(255, 255, 255);
+//#endregion
+
+html {
+    height: 100vh;
+    overflow: hidden;
+
+    .v-app {
+        height: 100%;
+        background-color: $app-bg-color;
+        overflow: hidden;
+    }
+
+    .side-menu-card {
+        z-index: 1000 !important;
+        position: absolute;
+
+        .side-menu {
+            background-color: $side-menu-bg-color;
+
+            .icon-color {
+                color: $icon-color;
+            }
+        }
+    }
+
+    .main {
+        height: 100%;
+        margin: 0rem 2rem 2rem 2rem;
+
+        .top-menu-row {
+
+            .top-menu-col {
+                padding: 0;
+                margin-top: 1.75rem;
+                margin-bottom: 1rem;
+            }
+
+            .top-menu-card {
+                margin: 0;
+                padding: 0;
+                background-color: $top-menu-card-bg-color;
+                color: $top-menu-card-color;
+            }
+        }
+
+        .page-content {
+            height: 38rem;
+            overflow: auto;
+
+            //#region Pages
+
+            .app-component-row {
+                flex-wrap: nowrap;
+            }
+
+            .expanded-row {
+                background-color: #574e8c88 !important;
+            }
+
+            .entity-form {
+                margin: 2rem 1rem 2rem 1rem !important;
+                padding: 1rem;
+            }
+
+            //#endregion
+        }
+    }
+}
