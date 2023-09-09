@@ -1,0 +1,5 @@
+#databaseChangeLog:
+#  - include:
+databaseChangeLog:
+  - include:
+      file: db/migrations/V1.0.0__add_ingredient_table.yaml

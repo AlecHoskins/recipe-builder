@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: Alec Hoskins
+      changes:
+        - sql:
+            sql: |
+              select * from app_user;
+#              CREATE TABLE IF NOT EXISTS ingredients (
+#                id serial PRIMARY KEY,
+#                name VARCHAR(255) NOT NULL,
+#                description TEXT,
+#                created_at TIMESTAMP DEFAULT current_timestamp,
+#                updated_at TIMESTAMP DEFAULT current_timestamp
+#              );
