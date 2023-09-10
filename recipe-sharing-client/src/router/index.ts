@@ -38,6 +38,15 @@ const routes = [
         component: () => import('@/views/recipes/RecipeDetails.vue'),
         meta: { requiresAuth: true }
       },
+      {
+        path: '/account-details',
+        name: 'Account Details',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import('@/views/account/AccountDetails.vue'),
+        meta: { requiresAuth: true }
+      },
     ]
 
   },

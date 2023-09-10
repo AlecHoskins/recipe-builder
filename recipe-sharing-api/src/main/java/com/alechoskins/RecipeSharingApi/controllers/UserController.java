@@ -4,6 +4,7 @@ import com.alechoskins.RecipeSharingApi.database.pojos.User;
 import com.alechoskins.RecipeSharingApi.global.constants.Endpoints;
 import com.alechoskins.RecipeSharingApi.services.Users.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,7 +14,8 @@ public class UserController {
     private UserServices userServices;
 
     @GetMapping(Endpoints.USER_GET)
-    public User getUser(@PathVariable Long id) {
+    public User getUser(@PathVariable Long id, Authentication authentication) {
+        var authorities = authentication.getAuthorities();
         return userServices.findById(id);
     }
 

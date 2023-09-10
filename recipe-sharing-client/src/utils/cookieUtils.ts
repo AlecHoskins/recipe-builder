@@ -21,7 +21,6 @@
     if (domain) {
       cookieValue = `${cookieValue}; domain=${domain}`;
     }
-    debugger
     document.cookie = cookieValue;
   };
   

@@ -1,6 +1,3 @@
-// import Endpoint from '../BaseEndPoint';
-
-// import { GetCurrentLoginInformationOutput  } from '.';
 import Endpoint from '../BaseEndPoint';
 import { GetCurrentLoginInformationOutput } from './dtos/GetCurrentLoginInformationsOutput';
 

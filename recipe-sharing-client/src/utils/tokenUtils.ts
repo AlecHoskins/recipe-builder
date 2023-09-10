@@ -13,7 +13,6 @@ export const setCookie = (
   cookieName?: string,
   expireDate?: Date
 ): void => {
-  debugger
   var cookie = {
     cookieName: cookieName ?? appConsts.tokenCookieName,
     authToken: authToken,
