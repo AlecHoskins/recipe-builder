@@ -20,7 +20,7 @@ public class ExceptionHandlers {
 
     @ExceptionHandler(RoleNotFoundException.class)
     ResponseEntity<String> handleRoleNotFoundException(RoleNotFoundException e){
-        return new ResponseEntity<>("System error assigning non existing role to user", HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>("System error assigning non existing role to appUser", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(UsernameNotFoundException.class)

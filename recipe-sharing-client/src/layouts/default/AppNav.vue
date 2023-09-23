@@ -12,8 +12,7 @@
             class="icon-color">
           </v-list-item>
         </router-link>
-        <v-list-item prepend-icon="mdi-logout" title="Logout" @click="logout"
-          class="icon-color">
+        <v-list-item prepend-icon="mdi-logout" title="Logout" @click="logout" class="icon-color">
         </v-list-item>
       </v-list>
 
@@ -39,6 +38,7 @@ import { deleteCookie } from '@/utils/cookieUtils';
 import appConsts from '@/constants/AppConstants';
 import UserDTO from '@/services/users/UserDto';
 import router from '@/router';
+import { Auth } from '@/services/auth/AuthEndPoint'
 
 const authStore = useAuthStore();
 
@@ -58,10 +58,15 @@ function returnUsername() {
 }
 
 //#region methods
-function logout(){
-  deleteCookie(appConsts.tokenCookieName);
-  authStore.setAuthenticatedUser({} as UserDTO);
-  router.replace("login");
+function logout() {
+  Auth.logout().then(() => {
+    deleteCookie(appConsts.tokenCookieName);
+    authStore.setAuthenticatedUser({} as UserDTO);
+    router.replace("login");
+  })
+    .catch(() => {
+      debugger
+    });
 }
 //#endregion
 </script>

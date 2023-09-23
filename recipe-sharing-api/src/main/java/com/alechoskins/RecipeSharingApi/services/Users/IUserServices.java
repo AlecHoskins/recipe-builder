@@ -1,13 +1,14 @@
 package com.alechoskins.RecipeSharingApi.services.Users;
 
-import com.alechoskins.RecipeSharingApi.database.pojos.User;
+import com.alechoskins.RecipeSharingApi.database.pojos.AppUser;
 
 public interface IUserServices {
-    User create(User user) ;
+    AppUser create(AppUser appUser) ;
     void delete(Long userId);
-
+    void createDefaultAdminUser();
     //region QUERIES
-    User findByUsernameOrEmail(String username, String email);
-    User findById(Long userId);
+    AppUser findByUsernameOrEmail(String username, String email);
+    boolean existsByUsernameOrEmail(String username, String email);
+    AppUser findById(Long userId);
     //endregion
 }

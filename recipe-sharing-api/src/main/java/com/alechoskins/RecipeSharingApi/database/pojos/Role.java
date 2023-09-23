@@ -11,7 +11,6 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "role")
 public class Role {
 
     //region PROPERTIES
@@ -27,8 +26,8 @@ public class Role {
 
     //region RELATIONSHIPS
 
-    @ManyToMany(mappedBy = "roles")
-    List<User> users;
+    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
+    private List<UserRole> userRoles;
 
     //endregion
 }

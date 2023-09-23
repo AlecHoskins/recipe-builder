@@ -6,7 +6,7 @@ import com.alechoskins.RecipeSharingApi.global.AppEnums;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class RoleServices implements IRoleServices {
@@ -20,12 +20,16 @@ public class RoleServices implements IRoleServices {
     }
 
     @Override
-    //todo create migration for these roles instead of doing this manually
-    public void createUserAdminRoles() {
-        var roles = new ArrayList<Role>();
-        roles.add( Role.builder().name( AppEnums.RoleNames.USER.name() ).build() );
-        roles.add( Role.builder().name( AppEnums.RoleNames.ADMIN.name() ).build() );
+    public List<Role> findAll() { return roleRepository.findAll(); }
 
-        roleRepository.saveAll(roles);
+    @Override
+    public void createUserRole() {
+        var role = Role.builder().name( AppEnums.RoleNames.USER.name() ).build();
+        roleRepository.save(role);
+    }
+    @Override
+    public void createAdminRole() {
+        var role = Role.builder().name( AppEnums.RoleNames.ADMIN.name() ).build();
+        roleRepository.save(role);
     }
 }

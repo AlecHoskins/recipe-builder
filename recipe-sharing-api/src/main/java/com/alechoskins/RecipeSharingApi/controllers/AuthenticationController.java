@@ -59,8 +59,8 @@ public class AuthenticationController {
         return ResponseEntity.ok(authResult);
     }
     @GetMapping(Endpoints.AUTH_LOGOUT)
-    public void logout(){
-        authenticationService.logout();
+    public void logout(HttpServletRequest request, HttpServletResponse response){
+        authenticationService.logout(request, response);
     }
 }
 /*

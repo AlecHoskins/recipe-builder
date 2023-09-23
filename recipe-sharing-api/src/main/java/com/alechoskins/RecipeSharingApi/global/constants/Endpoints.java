@@ -9,7 +9,7 @@ public class Endpoints {
     public static final String AUTH_LOGIN = AUTH + "/Login";
     public static final String AUTH_LOGOUT = AUTH + "/Logout";
 
-    public static final String USER = "/User";
+    public static final String USER = "/AppUser";
     public static final String USER_GET = USER+"/{id}";
     public static final String USER_GET_ALL = USER+"/All";
 

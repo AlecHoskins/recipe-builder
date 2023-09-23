@@ -14,12 +14,10 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "app_user")
-public class User implements UserDetails {
+public class AppUser implements UserDetails {
 
     //region PROPERTIES
 
-    @Setter(AccessLevel.NONE)
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
@@ -28,30 +26,27 @@ public class User implements UserDetails {
     private String username;
     @Column(nullable = false)
     private String password;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
-    @Column(nullable = false)
     private String emailVerificationCode;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "boolean default true")
     private boolean isAccountNonExpired;
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "boolean default true")
     private boolean isAccountNonLocked;
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "boolean default true")
     private boolean isCredentialsNonExpired;
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "boolean default true")
     private boolean isEnabled;
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "boolean default false")
     private boolean isDeleted;
     //endregion
 
     //region RELATIONSHIPS
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List<Role> roles;
+
+    @OneToMany(mappedBy = "appUser", cascade = CascadeType.ALL)
+    private List<UserRole> userRoles;
 
     //endregion
 
@@ -59,9 +54,9 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(roles != null){
-            return roles.stream().map(
-                    x -> new SimpleGrantedAuthority( x.getName() )
+        if(userRoles != null){
+            return userRoles.stream().map(
+                    x -> new SimpleGrantedAuthority( x.getRole().getName() )
             ).toList();
         }
         return null;

@@ -48,9 +48,12 @@ export default class AuthEndPoint extends Endpoint {
       authStore.setReturnUrl(null);
       return returnUrl;
     });
-  }
+  };
+  logout = () => {
+    return this.get("/Logout");
+  };
   confirmEmail = (data: string) => {
-    return this.post<string>("/ConfirmEmail").then((res)=> res.data );
+    return this.post<string>("/ConfirmEmail").then((res) => res.data);
   };
   forgotPassword = (email: { UserNameOrEmailAddress: string }) =>
     this.post('/ForgotPassword', email);
