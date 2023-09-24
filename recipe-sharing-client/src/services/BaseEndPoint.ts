@@ -36,6 +36,7 @@ export default class Endpoint {
       (error: AxiosError) => {
         debugger
         if (error.response && error.response.status === 401) {
+          debugger
           ClearAuthHeader();
           clearToken();
           router.replace('/login');

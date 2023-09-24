@@ -32,6 +32,7 @@
    * @returns The Cookie value if found, otherwise null.
    */
   export const getCookieValue = (key: string): string | null => {
+    debugger
     const equalities = document.cookie.split('; ');
     for (let i = 0; i < equalities.length; i++) {
       if (equalities[i]) {

@@ -38,6 +38,8 @@ import appConsts from '@/constants/AppConstants';
 import UserDTO from '@/services/users/UserDto';
 import router from '@/router';
 import { Auth } from '@/services/auth/AuthEndPoint'
+import { ClearAuthHeader } from '@/services/BaseEndPoint';
+import { clearToken } from '@/utils/tokenUtils';
 
 const authStore = useAuthStore();
 
@@ -59,9 +61,10 @@ function returnUsername() {
 //#region methods
 function logout() {
   Auth.logout().then(() => {
-    deleteCookie(appConsts.tokenCookieName);
+    ClearAuthHeader();
+    clearToken();
     authStore.setAuthenticatedUser({} as UserDTO);
-    router.replace("login");
+    router.replace("/login");
   })
     .catch(() => {
       debugger

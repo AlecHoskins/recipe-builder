@@ -57,7 +57,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to) => {
-
+debugger
   const authStore = useAuthStore();
   // if(!authStore.getIsAppInitialized){
     // Auth.authenticate();
