@@ -31,7 +31,7 @@ const routes = [
         meta: { requiresAuth: true }
       },
       {
-        path: '/recipe-details/:id',
+        path: '/recipe-details/:id?',
         name: 'Recipe Details',
  
         component: () => import('@/views/recipes/RecipeDetails.vue'),
