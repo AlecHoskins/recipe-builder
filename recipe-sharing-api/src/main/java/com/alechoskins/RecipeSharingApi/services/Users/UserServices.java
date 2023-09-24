@@ -1,7 +1,7 @@
 package com.alechoskins.RecipeSharingApi.services.Users;
 
 import com.alechoskins.RecipeSharingApi.database.pojos.AppUser;
-import com.alechoskins.RecipeSharingApi.database.pojos.UserRole;
+import com.alechoskins.RecipeSharingApi.database.pojos.User_Role;
 import com.alechoskins.RecipeSharingApi.database.repository.User.IUserRepository;
 import com.alechoskins.RecipeSharingApi.global.AppEnums;
 import com.alechoskins.RecipeSharingApi.global.ErrorHandling.exceptions.UsernameAlreadyExistsException;
@@ -54,11 +54,11 @@ public class UserServices implements IUserServices{
                 .build();
 
         var adminRole = roleServices.findByName(AppEnums.RoleNames.ADMIN.name());
-        var adminUserRole = UserRole.builder()
+        var adminUserRole = User_Role.builder()
                 .role(adminRole)
                 .appUser(user)
                 .build();
-        var userRoles = new ArrayList<UserRole>();
+        var userRoles = new ArrayList<User_Role>();
         userRoles.add(adminUserRole);
         user.setUserRoles(userRoles);
 

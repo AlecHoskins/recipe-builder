@@ -1,7 +1,7 @@
 package com.alechoskins.RecipeSharingApi.services.Authentication;
 
 import com.alechoskins.RecipeSharingApi.database.pojos.AppUser;
-import com.alechoskins.RecipeSharingApi.database.pojos.UserRole;
+import com.alechoskins.RecipeSharingApi.database.pojos.User_Role;
 import com.alechoskins.RecipeSharingApi.dto.User.response.UserDto;
 import com.alechoskins.RecipeSharingApi.global.AppEnums;
 import com.alechoskins.RecipeSharingApi.security.dto.AuthenticationResponse;
@@ -62,9 +62,9 @@ public class AuthenticationServices implements IAuthenticationServices {
                 .isAccountNonExpired(true)
                 .build();
         //create appUser role for new appUser
-        ArrayList<UserRole> userRoles = new ArrayList<UserRole>();
+        ArrayList<User_Role> userRoles = new ArrayList<User_Role>();
         userRoles.add(
-                UserRole.builder()
+                User_Role.builder()
                         .role(userRole)
                         .appUser(user)
                         .build()

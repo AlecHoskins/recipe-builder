@@ -1,6 +1,8 @@
 package com.alechoskins.RecipeSharingApi.global.ErrorHandling;
 
 import com.alechoskins.RecipeSharingApi.global.ErrorHandling.exceptions.UsernameAlreadyExistsException;
+import com.alechoskins.RecipeSharingApi.services.Authentication.IAuthenticationServices;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,6 +13,9 @@ import javax.management.relation.RoleNotFoundException;
 
 @ControllerAdvice
 public class ExceptionHandlers {
+
+    @Autowired
+    IAuthenticationServices authenticationServices;
 
     @ExceptionHandler(UsernameAlreadyExistsException.class)
     ResponseEntity<String> handleUsernameAlreadyExists(UsernameAlreadyExistsException e){

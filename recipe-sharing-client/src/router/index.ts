@@ -1,6 +1,7 @@
 // Composables
 import appConsts from '@/constants/AppConstants';
 import AuthEndPoint, { Auth } from '@/services/auth/AuthEndPoint';
+import RecipeDTO from '@/services/recipes/RecipeDto';
 import { useAuthStore } from '@/stores/AuthStore';
 import { getCookieValue } from '@/utils/cookieUtils';
 import { createRouter, createWebHistory } from 'vue-router'
@@ -30,11 +31,9 @@ const routes = [
         meta: { requiresAuth: true }
       },
       {
-        path: '/recipe-details',
+        path: '/recipe-details/:id',
         name: 'Recipe Details',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
+ 
         component: () => import('@/views/recipes/RecipeDetails.vue'),
         meta: { requiresAuth: true }
       },

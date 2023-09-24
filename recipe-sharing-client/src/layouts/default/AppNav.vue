@@ -33,7 +33,6 @@
 import { watch } from 'vue';
 import { ref } from 'vue';
 import { useAuthStore } from '@/stores/AuthStore'
-import { clearToken } from '@/utils/tokenUtils';
 import { deleteCookie } from '@/utils/cookieUtils';
 import appConsts from '@/constants/AppConstants';
 import UserDTO from '@/services/users/UserDto';

@@ -1,7 +1,9 @@
 package com.alechoskins.RecipeSharingApi.security.jwt;
 
+import com.alechoskins.RecipeSharingApi.services.Authentication.IAuthenticationServices;
 import com.alechoskins.RecipeSharingApi.services.Jwt.JwtServices;
 import com.alechoskins.RecipeSharingApi.services.Users.UserServices;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+
 import java.io.IOException;
 
 @Component
@@ -25,6 +28,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtServices jwtServices;
     @Autowired
     private final UserServices userService;
+    @Autowired
+    private final IAuthenticationServices authenticationServices;
 
     @Override
     protected void doFilterInternal(
@@ -58,8 +63,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
             }
             filterChain.doFilter(request, response);
-        }catch (Exception e){
-            var message = e.getMessage();
+        }catch (ExpiredJwtException e){
+            authenticationServices.logout(request, response);
+            //have to do set the response status here vs a custom exception because doInternalFilter happens before the method is contacted.
+            //because of that, @ControllerAdvice won't be able to handle it
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "JWT token has expired");
         }
 
         //https://www.youtube.com/watch?v=KxqlJblhzfI

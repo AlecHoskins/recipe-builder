@@ -46,7 +46,7 @@ public class AppUser implements UserDetails {
 
 
     @OneToMany(mappedBy = "appUser", cascade = CascadeType.ALL)
-    private List<UserRole> userRoles;
+    private List<User_Role> userRoles;
 
     //endregion
 

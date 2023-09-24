@@ -13,7 +13,6 @@
 
 <script setup lang="ts">
 import UserDTO from '@/services/users/UserDto';
-import { UserEndPoint } from '@/services/users/UserEndPoint'
 import { useAuthStore } from '@/stores/AuthStore';
 import { ref } from 'vue';
 

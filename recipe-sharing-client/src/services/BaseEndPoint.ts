@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import axios from '@/utils/axios';
 import appConsts from '@/constants/AppConstants';
 import { useAuthStore } from '@/stores/AuthStore';
-import { getToken } from '@/utils/tokenUtils';
+import { clearToken, getToken } from '@/utils/tokenUtils';
+import { deleteCookie } from '@/utils/cookieUtils';
+import router from '@/router';
 
 export const SetAuthHeader = () => {
   var token = getToken();
@@ -28,6 +30,18 @@ export default class Endpoint {
   constructor(baseEndpoint?: string) {
     this.endpoint = `${appConsts.apiBaseUrl}${baseEndpoint ?? ''}`;
     SetAuthHeader();
+    //if server thows unauthorized error, log user out
+    axios.interceptors.response.use(
+      (response: AxiosResponse) => response,
+      (error: AxiosError) => {
+        debugger
+        if (error.response && error.response.status === 401) {
+          ClearAuthHeader();
+          clearToken();
+          router.replace('/login');
+        }
+      }
+    );
   }
 
   protected get = <T = any, R = AxiosResponse<{ result: T }>>(
@@ -41,8 +55,8 @@ export default class Endpoint {
   ): Promise<R> => axios.delete<T, R>(`${this.endpoint}${url ?? ''}`, config);
 
   protected post = <T = any, R = AxiosResponse<{
-    [x: string]: string; result: T 
-}>>(
+    [x: string]: string; result: T
+  }>>(
     url?: string,
     data?: any,
     config?: AxiosRequestConfig
@@ -62,4 +76,6 @@ export default class Endpoint {
     config?: AxiosRequestConfig
   ): Promise<R> =>
     axios.patch<T, R>(`${this.endpoint}${url ?? ''}`, data, config);
+
+
 }

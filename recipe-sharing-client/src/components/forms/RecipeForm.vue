@@ -9,40 +9,68 @@
         <v-card-text>
             <v-window v-model="tab">
                 <v-window-item value="Recipe">
-                    <VRow>
-                        <VCol>
-                            <VTextField label="Recipe Name" v-model="recipe.name"></VTextField>
-                        </VCol>
-                        <VCol>
-                            <VTextField label="Price" v-model="recipe.price"></VTextField>
-                        </VCol>
-                        <VCol>
-                            <VTextField type="number" label="Servings" v-model="recipe.servings"></VTextField>
-                        </VCol>
-                    </VRow>
-                    <VRow>
-                        <VCol>
-                            <VTextField label="Cook Time (Minutes)" v-model="recipe.minutes"></VTextField>
-                        </VCol>
-                        <VCol>
-                            <VTextField label="Link" v-model="recipe.link"></VTextField>
-                        </VCol>
-                        <VCol>
-                            <VTextField label="Image Url" v-model="recipe.imageUrl"></VTextField>
-                        </VCol>
-                        <VCol>
-                            <VSelect label="tags" multiple></VSelect>
-                        </VCol>
-                    </VRow>
-                    <VRow>
-                        <VCol>
-                            <VTextarea label="Description" v-model="recipe.description"></VTextarea>
-                        </VCol>
-                    </VRow>
+                    <VForm v-model="recipeFormValid" class="recipe-form" ref="recipeForm">
+                        <VRow>
+                            <VCol>
+                                <VTextField v-model="recipe.name" :rules="[v => !!v || 'Recipe name is required']">
+                                    <template #label>
+                                        <p style="color:red">Recipe Name <span><strong>* </strong></span></p>
+                                    </template>
+                                </VTextField>
+
+
+                            </VCol>
+                            <VCol>
+                                <VTextField v-model="recipe.price" :rules="[v => !!v || 'Price is required']" type="number">
+                                    <template #label>
+                                        <p style="color:red">Price (USD) <span><strong>* </strong></span></p>
+                                    </template>
+                                </VTextField>
+                            </VCol>
+                            <VCol>
+                                <VTextField type="number" v-model="recipe.servings"
+                                    :rules="[v => !!v || 'Servings is required']">
+                                    <template #label>
+                                        <p style="color:red">Servings <span><strong>* </strong></span></p>
+                                    </template>
+                                </VTextField>
+                            </VCol>
+                        </VRow>
+                        <VRow>
+                            <VCol>
+                                <VTextField type="number" v-model="recipe.minutes"
+                                    :rules="[v => !!v || 'Cook time is required']">
+                                    <template #label>
+                                        <p style="color:red">Cook Time (Minutes) <span><strong>* </strong></span></p>
+                                    </template>
+                                </VTextField>
+                            </VCol>
+                            <VCol>
+                                <VTextField label="Link" v-model="recipe.link"></VTextField>
+                            </VCol>
+                            <VCol>
+                                <VTextField label="Image Url" v-model="recipe.imageUrl"></VTextField>
+                            </VCol>
+                            <VCol>
+                                <VSelect label="tags" multiple></VSelect>
+                            </VCol>
+                        </VRow>
+                        <VRow>
+                            <VCol>
+                                <VTextarea label="Description" v-model="recipe.description"></VTextarea>
+                            </VCol>
+                        </VRow>
+                        <VRow>
+                            <VCol>
+                                <VBtn color="blue" @click="saveRecipe">Save</VBtn>
+                            </VCol>
+                        </VRow>
+                    </VForm>
+
                 </v-window-item>
                 <v-window-item value="ingredients">
                     <div v-for="ingredient in recipe.ingredients">
-                        <VRow >
+                        <VRow>
                             <VCol>
                                 <VSelect label="Sku"></VSelect>
                             </VCol>
@@ -73,7 +101,8 @@
                     </VRow>
                     <VRow>
                         <VCol>
-                            <VBtn prepend-icon="mdi-plus" @click="addExistingIngredientLine()" >Add Existing Ingredient</VBtn>
+                            <VBtn prepend-icon="mdi-plus" @click="addExistingIngredientLine()">Add Existing Ingredient
+                            </VBtn>
                         </VCol>
                         <VCol>
                             <v-btn prepend-icon="mdi-plus">
@@ -129,26 +158,57 @@
 </template>
 
 <script lang="ts" setup>
+import { RecipeServices } from '@/services/recipes/RecipeEndPoint'
 import RecipeDTO from '@/services/recipes/RecipeDto';
 import { ref } from 'vue';
 import IngredientForm from './IngredientForm.vue';
 import IngredientDTO from '@/services/ingredients/IngredientDto';
+import { VForm } from 'vuetify/lib/components/index.mjs';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 let tab = ref(null);
 const isIngredientFormShowing = ref(false);
+
 //#region Form Data
 let recipe = ref({} as RecipeDTO);
+const recipeFormValid = ref(false);
+const recipeForm = ref(null as VForm | null);
 //#endregion
 
 //#region Methods
+async function saveRecipe() {
+    if (await recipeForm.value?.validate()) {
+        RecipeServices.save(recipe.value)
+            .then((res) => {
+                router.replace({
+                    path: `ingredient-details/${res.result.id}`
+                });
+            })
+            .catch((err) => {
+            });
+    }
+}
+function getRecipe(id: number) {
+    RecipeServices.getById(id)
+        .then((res) => {
+            debugger
+            recipe.value = res;
+        });
+}
 function toggleIngredientForm() {
     isIngredientFormShowing.value = !isIngredientFormShowing.value;
 }
-function addExistingIngredientLine(){
-    if(!recipe.value.ingredients){
+function addExistingIngredientLine() {
+    if (!recipe.value.ingredients) {
         recipe.value.ingredients = [];
     }
     recipe.value.ingredients.push({} as IngredientDTO);
 }
 //#endregion
+
+if (router.currentRoute.value.params.id) {
+    debugger
+    getRecipe(parseInt(router.currentRoute.value.params.id[0]));
+}
 </script>

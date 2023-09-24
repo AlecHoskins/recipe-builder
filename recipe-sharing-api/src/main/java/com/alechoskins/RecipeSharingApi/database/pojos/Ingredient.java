@@ -3,6 +3,7 @@ package com.alechoskins.RecipeSharingApi.database.pojos;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Getter
@@ -11,23 +12,24 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-public class Role {
+public class Ingredient {
 
     //region PROPERTIES
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
     private Long id;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
+    private String upc;
+    @Column(nullable = false)
     private String name;
-
+    @Column(nullable = false)
+    private BigDecimal ozPerUnit;
     //endregion
 
     //region RELATIONSHIPS
-
-    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
-    private List<User_Role> userRoles;
-
+    @OneToMany(mappedBy = "ingredient", cascade = CascadeType.ALL)
+    private List<StoreLocation_Ingredient> storeLocation_ingredient;
     //endregion
+
 }
