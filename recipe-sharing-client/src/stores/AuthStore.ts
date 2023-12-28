@@ -7,7 +7,9 @@ export const useAuthStore = defineStore("authStore", () => {
 
   //#region Authenticated User
   const authenticatedUser = ref(null as UserDTO | null);
-  const getAuthenticatedUser = computed(() => authenticatedUser.value);
+  const getAuthenticatedUser = computed(() =>  { 
+    return authenticatedUser.value;
+  });
   function setAuthenticatedUser(newAuthenticatedUser: UserDTO) {
     authenticatedUser.value = newAuthenticatedUser;
   }

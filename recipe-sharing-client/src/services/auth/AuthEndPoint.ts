@@ -28,8 +28,8 @@ export interface LoginResponse {
 export default class AuthEndPoint extends Endpoint {
   register = (data: RegisterRequestDto) =>
     this.post<LoginResponse>('/Register', data).then((res) => {
-      if (res.data.result.accessToken) {
-        setCookie(res.data.result.accessToken);
+      if (res.data.accessToken) {
+        setCookie(res.data.accessToken);
         var authStore = useAuthStore();
         SetAuthHeader();
       }

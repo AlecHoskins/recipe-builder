@@ -43,38 +43,42 @@ export default class Endpoint {
     );
   }
 
-  protected get = <T = any, R = AxiosResponse<{ result: T }>>(
+  protected get = <T = any, R = AxiosResponse<T>>(
     url?: string,
     config?: AxiosRequestConfig
   ): Promise<R> => axios.get<T, R>(`${this.endpoint}${url ?? ''}`, config);
 
-  protected delete = <T = any, R = AxiosResponse<{ result: T }>>(
+  protected delete = <T = any, R = AxiosResponse<T>>(
     url?: string,
     config?: AxiosRequestConfig
   ): Promise<R> => axios.delete<T, R>(`${this.endpoint}${url ?? ''}`, config);
 
-  protected post = <T = any, R = AxiosResponse<{
-    [x: string]: string; result: T
-  }>>(
+  protected post = <T = any, R = AxiosResponse<T>>(
     url?: string,
     data?: any,
     config?: AxiosRequestConfig
   ): Promise<R> =>
     axios.post<T, R>(`${this.endpoint}${url ?? ''}`, data, config);
+      // protected post = <T = any, R = AxiosResponse<{
+  //   [x: string]: string; result: T
+  // }>>(
+  //   url?: string,
+  //   data?: any,
+  //   config?: AxiosRequestConfig
+  // ): Promise<R> =>
+  //   axios.post<T, R>(`${this.endpoint}${url ?? ''}`, data, config);
 
-  protected put = <T = any, R = AxiosResponse<{ result: T }>>(
+  protected put = <T = any, R = AxiosResponse<T>>(
     url?: string,
     data?: any,
     config?: AxiosRequestConfig
   ): Promise<R> =>
     axios.put<T, R>(`${this.endpoint}${url ?? ''}`, data, config);
 
-  protected patch = <T = any, R = AxiosResponse<{ result: T }>>(
+  protected patch = <T = any, R = AxiosResponse<T>>(
     url?: string,
     data?: any,
     config?: AxiosRequestConfig
   ): Promise<R> =>
     axios.patch<T, R>(`${this.endpoint}${url ?? ''}`, data, config);
-
-
 }

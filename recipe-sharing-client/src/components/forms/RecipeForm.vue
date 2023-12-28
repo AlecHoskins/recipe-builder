@@ -17,8 +17,6 @@
                                         <p style="color:red">Recipe Name <span><strong>* </strong></span></p>
                                     </template>
                                 </VTextField>
-
-
                             </VCol>
                             <VCol>
                                 <VTextField v-model="recipe.price" :rules="[v => !!v || 'Price is required']" type="number">

@@ -6,6 +6,7 @@ import { useAuthStore } from '@/stores/AuthStore';
 import { getCookieValue } from '@/utils/cookieUtils';
 import { createRouter, createWebHistory } from 'vue-router'
 import { UserServices } from '@/services/users/UserEndPoint';
+import UserDTO from '@/services/users/UserDto';
 
 const routes = [
   {
@@ -59,7 +60,6 @@ const router = createRouter({
 });
 
 router.beforeEach((to) => {
-  debugger
   const authStore = useAuthStore();
   // if(!authStore.getIsAppInitialized){
     // Auth.authenticate();
@@ -67,11 +67,13 @@ router.beforeEach((to) => {
   var accessToken = getCookieValue(appConsts.tokenCookieName);
 
   if (accessToken && !authStore.getAuthenticatedUser) {
-    UserServices.getUserByToken()
-      .then((res) => {
-        debugger
+    UserServices.getUser()
+      .then((authUser) => {
+        authStore.setAuthenticatedUser(authUser);
+        var storeAuthUser = authStore.getAuthenticatedUser;
       });
   }
+  debugger
 
   if (to.meta.requiresAuth && !accessToken) {
     authStore.setReturnUrl(to.fullPath);

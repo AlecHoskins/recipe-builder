@@ -4,11 +4,12 @@ import UserDTO from './UserDto';
 
 class UserEndPoint extends Endpoint {
     getUserById = (id: number) => this.get<UserDTO>(`/id?=${id}`).then((res) => {
-        debugger
-        res.data
+        return res.data;
     });
 
-    getUserByToken = () => this.get<object>("");
+    getUser = () => this.get<UserDTO>("").then((res)=> {
+        return res.data;
+    });
 }
 
 export const UserServices = new UserEndPoint('/User');

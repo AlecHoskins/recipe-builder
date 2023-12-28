@@ -40,7 +40,6 @@ public class UserController {
             System.out.println(e.getMessage());
             return null;
         }
-
     }
 
     @GetMapping(Endpoints.USER_GET_ALL)
