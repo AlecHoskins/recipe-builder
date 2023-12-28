@@ -73,7 +73,6 @@ router.beforeEach((to) => {
         var storeAuthUser = authStore.getAuthenticatedUser;
       });
   }
-  debugger
 
   if (to.meta.requiresAuth && !accessToken) {
     authStore.setReturnUrl(to.fullPath);

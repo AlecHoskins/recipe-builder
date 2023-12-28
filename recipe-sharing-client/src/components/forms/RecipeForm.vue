@@ -5,7 +5,6 @@
             <v-tab value="ingredients">Ingredients</v-tab>
             <v-tab value="steps">Steps</v-tab>
         </v-tabs>
-
         <v-card-text>
             <v-window v-model="tab">
                 <v-window-item value="Recipe">
@@ -180,7 +179,7 @@ async function saveRecipe() {
         RecipeServices.save(recipe.value)
             .then((res) => {
                 router.replace({
-                    path: `ingredient-details/${res.result.id}`
+                    path: `ingredient-details/${res.id}`
                 });
             })
             .catch((err) => {
@@ -188,9 +187,10 @@ async function saveRecipe() {
     }
 }
 function getRecipe(id: number) {
+    debugger
     RecipeServices.getById(id)
         .then((res) => {
-            
+            debugger
             recipe.value = res;
         });
 }
@@ -206,6 +206,6 @@ function addExistingIngredientLine() {
 //#endregion
 
 if (router.currentRoute.value.params.id) {
-    getRecipe(parseInt(router.currentRoute.value.params.id[0]));
+    getRecipe(parseInt(router.currentRoute.value.params.id));
 }
 </script>
