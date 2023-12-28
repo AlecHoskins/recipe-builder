@@ -44,10 +44,8 @@ function getRecipes(){
     });
 }
 function redirectToRecipeDetails(e: any, item: any) {
-    debugger
     var clickedRecipeId = item?.item?.raw?.id;
     clickedRecipeId ? router.replace(`/recipe-details/${clickedRecipeId}`)  : router.replace(`/recipe-details`)
-    
 }
 //#endregion
 getRecipes();

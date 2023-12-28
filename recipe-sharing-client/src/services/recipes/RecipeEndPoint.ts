@@ -1,5 +1,5 @@
 import Endpoint from "../BaseEndPoint";
-import RecipeDTO from "./RecipeDto";
+import RecipeDTO from "./dto/RecipeDto";
 
 // export const App = new AppEndPoint('Application');
 

@@ -49,7 +49,7 @@
                                 <VTextField label="Image Url" v-model="recipe.imageUrl"></VTextField>
                             </VCol>
                             <VCol>
-                                <VSelect label="tags" multiple></VSelect>
+                                <!-- <VSelect label="tags" multiple></VSelect> -->
                             </VCol>
                         </VRow>
                         <VRow>
@@ -156,7 +156,7 @@
 
 <script lang="ts" setup>
 import { RecipeServices } from '@/services/recipes/RecipeEndPoint'
-import RecipeDTO from '@/services/recipes/RecipeDto';
+import RecipeDTO from '@/services/recipes/dto/RecipeDto';
 import { ref } from 'vue';
 import IngredientForm from './IngredientForm.vue';
 import IngredientDTO from '@/services/ingredients/IngredientDto';
@@ -187,10 +187,8 @@ async function saveRecipe() {
     }
 }
 function getRecipe(id: number) {
-    debugger
     RecipeServices.getById(id)
         .then((res) => {
-            debugger
             recipe.value = res;
         });
 }

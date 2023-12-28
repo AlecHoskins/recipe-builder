@@ -1,7 +1,7 @@
 // Composables
 import appConsts from '@/constants/AppConstants';
 import AuthEndPoint, { Auth } from '@/services/auth/AuthEndPoint';
-import RecipeDTO from '@/services/recipes/RecipeDto';
+import RecipeDTO from '@/services/recipes/dto/RecipeDto';
 import { useAuthStore } from '@/stores/AuthStore';
 import { getCookieValue } from '@/utils/cookieUtils';
 import { createRouter, createWebHistory } from 'vue-router'

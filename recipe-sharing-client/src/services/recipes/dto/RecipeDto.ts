@@ -1,5 +1,6 @@
-import IngredientDTO from "../ingredients/IngredientDto";
-import InstructionDTO from "../instructions/InstructionDto";
+import RecipeTagDto from "@/services/recipeTags/RecipeTagDto";
+import IngredientDTO from "../../ingredients/IngredientDto";
+import InstructionDTO from "../../instructions/InstructionDto";
 
 export default interface RecipeDTO {
     id: number;
@@ -12,5 +13,5 @@ export default interface RecipeDTO {
     price: number;
     link: string;
     imageUrl: string;
-    tags: string[];
+    recipeTags: RecipeTagDto[];
 }
