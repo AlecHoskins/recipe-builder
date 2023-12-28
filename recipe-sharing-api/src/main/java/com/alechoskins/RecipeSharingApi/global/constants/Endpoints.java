@@ -13,8 +13,9 @@ public class Endpoints {
 
     //region User
     public static final String USER = "/User";
-    public static final String USER_GET = USER+"/{id}";
     public static final String USER_GET_ALL = USER+"/All";
+    public static final String USER_GET_BY_ID = USER+"/{id}";
+    public static final String USER_GET_BY_TOKEN = USER+"/{token}";
     //endregion
 
     //region Ingredient

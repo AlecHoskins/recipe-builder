@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import java.security.Key;
@@ -18,7 +19,11 @@ public class JwtServices {
 
     //region PROPERTIES
 
-    private final static String SECRET_KEY = System.getenv("JWT_SECRET_KEY");
+    @Value("${jwt.secret}")
+    private String SECRET_KEY;
+
+//    private final static String SECRET_KEY = System.getenv("JWT_SECRET_KEY");
+
     private final int SOMETHING = 5;
 
     //endregion

@@ -7,12 +7,8 @@ class UserEndPoint extends Endpoint {
         debugger
         res.data
     });
-    // getAppInfo = async () =>
-    //     (await this.get<GetCurrentLoginInformationOutput>('')).data.result;
-    getUserByToken = () => this.get<UserDTO>().then((res) => {
-        debugger
-        res.data
-    });
+
+    getUserByToken = () => this.get<object>("");
 }
 
 export const UserServices = new UserEndPoint('/User');
