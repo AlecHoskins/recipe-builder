@@ -5,6 +5,8 @@ import RecipeDTO from '@/services/recipes/RecipeDto';
 import { useAuthStore } from '@/stores/AuthStore';
 import { getCookieValue } from '@/utils/cookieUtils';
 import { createRouter, createWebHistory } from 'vue-router'
+import { UserServices } from '@/services/users/UserEndPoint';
+
 const routes = [
   {
     path: '',
@@ -57,16 +59,25 @@ const router = createRouter({
 });
 
 router.beforeEach((to) => {
-debugger
+  debugger
   const authStore = useAuthStore();
   // if(!authStore.getIsAppInitialized){
     // Auth.authenticate();
   // }
-  var accessToken = getCookieValue(appConsts.tokenCookieName)
+  var accessToken = getCookieValue(appConsts.tokenCookieName);
+
+  if (accessToken && !authStore.getAuthenticatedUser) {
+    UserServices.getUserByToken()
+      .then((res) => {
+        debugger
+      });
+  }
+
   if (to.meta.requiresAuth && !accessToken) {
     authStore.setReturnUrl(to.fullPath);
     return '/login';
   } 
+
 });
 
 export default router

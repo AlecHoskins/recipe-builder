@@ -34,9 +34,7 @@ export default class Endpoint {
     axios.interceptors.response.use(
       (response: AxiosResponse) => response,
       (error: AxiosError) => {
-        debugger
         if (error.response && error.response.status === 401) {
-          debugger
           ClearAuthHeader();
           clearToken();
           router.replace('/login');

@@ -192,7 +192,7 @@ async function saveRecipe() {
 function getRecipe(id: number) {
     RecipeServices.getById(id)
         .then((res) => {
-            debugger
+            
             recipe.value = res;
         });
 }
@@ -208,7 +208,6 @@ function addExistingIngredientLine() {
 //#endregion
 
 if (router.currentRoute.value.params.id) {
-    debugger
     getRecipe(parseInt(router.currentRoute.value.params.id[0]));
 }
 </script>

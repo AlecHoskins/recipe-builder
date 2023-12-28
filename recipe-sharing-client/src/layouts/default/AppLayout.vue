@@ -30,6 +30,6 @@ watch(getAuthenticatedUser, () => {
   else{
     isUserAuthenticated.value = false;
   }
-});
+}, { immediate: true });
 
 </script>

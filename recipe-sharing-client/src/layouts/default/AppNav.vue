@@ -66,9 +66,6 @@ function logout() {
     authStore.setAuthenticatedUser({} as UserDTO);
     router.replace("/login");
   })
-    .catch(() => {
-      debugger
-    });
 }
 //#endregion
 </script>
