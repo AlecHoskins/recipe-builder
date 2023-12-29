@@ -2,8 +2,8 @@
     <v-card>
         <v-tabs v-model="tab" bg-color="primary">
             <v-tab value="Recipe">Recipe</v-tab>
-            <v-tab value="ingredients">Ingredients</v-tab>
-            <v-tab value="steps">Steps</v-tab>
+            <v-tab value="ingredients" v-if="recipe != null && recipe.id">Ingredients</v-tab>
+            <v-tab value="steps" v-if="recipe != null && recipe.id">Steps</v-tab>
         </v-tabs>
         <v-card-text>
             <v-window v-model="tab">
@@ -65,7 +65,7 @@
                     </VForm>
 
                 </v-window-item>
-                <v-window-item value="ingredients">
+                <v-window-item value="ingredients" v-if="recipe != null && recipe.id">
                     <div v-for="ingredient in recipe.ingredients">
                         <VRow>
                             <VCol>
@@ -142,7 +142,7 @@
                         </VCol>
                     </VRow>
                 </v-window-item>
-                <v-window-item value="steps">
+                <v-window-item value="steps" v-if="recipe != null && recipe.id">
                     <VRow>
                         <VCol>
                             <VCardTitle>Instructions</VCardTitle>

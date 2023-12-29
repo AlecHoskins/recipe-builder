@@ -10,7 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class RecipeSharingApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(RecipeSharingApplication.class, args);
+		try{
+			SpringApplication.run(RecipeSharingApplication.class, args);
+		}catch (Exception e){
+			System.out.println(e.getMessage());
+		}
 	}
 }
 
