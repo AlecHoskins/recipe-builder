@@ -10,7 +10,7 @@ export default interface RecipeDTO {
     instructions: InstructionDTO[];
     minutes: number;
     servings: number;
-    price: number;
+    lastRecordedPrice: number | null;
     link: string;
     imageUrl: string;
     recipeTags: RecipeTagDto[];

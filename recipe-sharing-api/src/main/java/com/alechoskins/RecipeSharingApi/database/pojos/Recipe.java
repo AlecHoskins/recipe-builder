@@ -25,8 +25,8 @@ public class Recipe {
     private int minutes;
     @Column(nullable = false)
     private double servings;
-    @Column(nullable = false)
-    private double price;
+    @Column(nullable = true)
+    private Double lastRecordedPrice;
     @Column(nullable = true)
     private String link;
     @Column(nullable = true)

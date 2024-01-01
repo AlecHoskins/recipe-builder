@@ -2,8 +2,8 @@
     <v-card>
         <v-tabs v-model="tab" bg-color="primary">
             <v-tab value="Recipe">Recipe</v-tab>
-            <v-tab value="ingredients" v-if="recipe != null && recipe.id">Ingredients</v-tab>
-            <v-tab value="steps" v-if="recipe != null && recipe.id">Steps</v-tab>
+            <v-tab value="ingredients" v-if="queryHasIdParameter">Ingredients</v-tab>
+            <v-tab value="steps" v-if="queryHasIdParameter">Steps</v-tab>
         </v-tabs>
         <v-card-text>
             <v-window v-model="tab">
@@ -17,13 +17,13 @@
                                     </template>
                                 </VTextField>
                             </VCol>
-                            <VCol>
+                            <!-- <VCol>
                                 <VTextField v-model="recipe.price" :rules="[v => !!v || 'Price is required']" type="number">
                                     <template #label>
                                         <p style="color:red">Price (USD) <span><strong>* </strong></span></p>
                                     </template>
                                 </VTextField>
-                            </VCol>
+                            </VCol> -->
                             <VCol>
                                 <VTextField type="number" v-model="recipe.servings"
                                     :rules="[v => !!v || 'Servings is required']">
@@ -65,7 +65,7 @@
                     </VForm>
 
                 </v-window-item>
-                <v-window-item value="ingredients" v-if="recipe != null && recipe.id">
+                <v-window-item value="ingredients" v-if="queryHasIdParameter">
                     <div v-for="ingredient in recipe.ingredients">
                         <VRow>
                             <VCol>
@@ -142,7 +142,7 @@
                         </VCol>
                     </VRow>
                 </v-window-item>
-                <v-window-item value="steps" v-if="recipe != null && recipe.id">
+                <v-window-item value="steps" v-if="queryHasIdParameter">
                     <VRow>
                         <VCol>
                             <VCardTitle>Instructions</VCardTitle>
@@ -162,10 +162,11 @@ import IngredientForm from './IngredientForm.vue';
 import IngredientDTO from '@/services/ingredients/IngredientDto';
 import { VForm } from 'vuetify/lib/components/index.mjs';
 import { useRouter } from 'vue-router';
-
 const router = useRouter();
 let tab = ref(null);
 const isIngredientFormShowing = ref(false);
+const queryHasIdParameter = ref(false);
+const emit = defineEmits(["recipeFormSaved"]);
 
 //#region Form Data
 let recipe = ref({} as RecipeDTO);
@@ -179,8 +180,9 @@ async function saveRecipe() {
         RecipeServices.save(recipe.value)
             .then((res) => {
                 router.replace({
-                    path: `ingredient-details/${res.id}`
+                    path: `recipe-details/${res.id}`
                 });
+                emit("recipeFormSaved");
             })
             .catch((err) => {
             });
@@ -201,9 +203,16 @@ function addExistingIngredientLine() {
     }
     recipe.value.ingredients.push({} as IngredientDTO);
 }
+function setQueryHaveIdParameter(){
+    router.currentRoute.value.params.id && parseInt(router.currentRoute.value.params.id) != 0 
+    ? queryHasIdParameter.value = true
+    : queryHasIdParameter.value = false;
+}
 //#endregion
 
 if (router.currentRoute.value.params.id) {
     getRecipe(parseInt(router.currentRoute.value.params.id));
 }
+setQueryHaveIdParameter();
+
 </script>

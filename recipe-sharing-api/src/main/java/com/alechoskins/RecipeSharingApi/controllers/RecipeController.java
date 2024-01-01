@@ -5,6 +5,7 @@ import com.alechoskins.RecipeSharingApi.global.constants.Endpoints;
 import com.alechoskins.RecipeSharingApi.services.Recipes.IRecipeServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,8 +39,14 @@ public class RecipeController {
     //region Post
     @PostMapping(Endpoints.RECIPE_SAVE)
     public ResponseEntity<Recipe> saveRecipe(@RequestBody Recipe recipe) {
-        var data = recipeServices.saveRecipe(recipe);
-        return ResponseEntity.ok(data);
+        try{
+            var data = recipeServices.saveRecipe(recipe);
+            return ResponseEntity.ok(data);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+
     }
     //endregion
 
